@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en-US" }}">
+  {% include head.html %}
+  <body>
+    {% include back-to-top.html %}
+
+    <!-- Main Content (No Header) -->
+    <main class="content plain-layout">
+      {{ content }}
+
+      {% include last-updated.html %}
+    </main>
+
+    {% include footer.html %}
+  </body>
+</html>

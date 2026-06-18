@@ -1,0 +1,101 @@
+{% assign is_zh = false %}
+{% if page.lang == 'zh-CN' or page.lang == 'zh' %}
+  {% assign is_zh = true %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en-US' }}">
+  {% include head.html %}
+  <body>
+    {% include back-to-top.html %}
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="{% if is_zh %}{{ '/zh/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}" class="site-nav-title">{{ site.title }}</a>
+      <a href="{% if is_zh %}{{ '/zh/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}">{% if is_zh %}关于{% else %}About{% endif %}</a>
+      <a href="{% if is_zh %}{{ '/zh/publications/' | relative_url }}{% else %}{{ '/publications/' | relative_url }}{% endif %}">{% if is_zh %}论文{% else %}Publications{% endif %}</a>
+      <a href="{% if is_zh %}{{ '/zh/awards/' | relative_url }}{% else %}{{ '/awards/' | relative_url }}{% endif %}">{% if is_zh %}获奖{% else %}Awards{% endif %}</a>
+      <a href="{% if is_zh %}{{ '/zh/news/' | relative_url }}{% else %}{{ '/news/' | relative_url }}{% endif %}">{% if is_zh %}动态{% else %}News{% endif %}</a>
+      <div class="language-menu">
+        <button type="button" class="language-trigger">
+          Language <span>{% if is_zh %}中文{% else %}English{% endif %}</span>
+        </button>
+        <div class="language-options" role="menu">
+          <a href="{{ '/' | relative_url }}" class="{% unless is_zh %}current{% endunless %}" role="menuitem">English{% unless is_zh %}<span>Current</span>{% endunless %}</a>
+          <a href="{{ '/zh/' | relative_url }}" class="{% if is_zh %}current{% endif %}" role="menuitem">中文{% if is_zh %}<span>当前</span>{% endif %}</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-shell">
+      <aside class="profile">
+        {% if site.avatar %}
+        <a href="{{ '/' | relative_url }}" class="profile-avatar image avatar"><img src="{{ site.avatar | relative_url }}" alt="{{ site.title | strip_html }}" /></a>
+        {% endif %}
+
+        <h1 class="profile-name">{{ site.title }}</h1>
+        {% if site.position %}<div class="profile-position">{% if is_zh %}硕士研究生{% else %}{{ site.position }}{% endif %}</div>{% endif %}
+        {% if site.affiliation_link %}
+        <a href="{{ site.affiliation_link }}" rel="noopener" class="profile-affiliation">{% if is_zh %}苏州大学{% else %}{{ site.affiliation }}{% endif %}</a>
+        {% else %}
+        <div class="profile-affiliation">{% if is_zh %}苏州大学{% else %}{{ site.affiliation }}{% endif %}</div>
+        {% endif %}
+        <a href="https://github.com/SUDA-LA" rel="noopener" class="profile-group">{% if is_zh %}SUDA-HLT 团队{% else %}SUDA-HLT team{% endif %}</a>
+        {% if site.email %}<div class="profile-email">{{ site.email }}</div>{% endif %}
+        <a href="{{ site.canonical }}" rel="noopener" class="profile-site">{% if is_zh %}个人主页{% else %}Homepage{% endif %}: ruitongmei.github.io</a>
+        <div class="profile-views" id="busuanzi_container_site_pv">
+          {% if is_zh %}主页阅读量{% else %}Homepage Views{% endif %}: <span id="busuanzi_value_site_pv"></span>
+        </div>
+
+        <section class="profile-interests" aria-labelledby="research-interests">
+          <h3 id="research-interests">{% if is_zh %}研究方向{% else %}Research Interests{% endif %}</h3>
+          {% if is_zh %}
+          <p>自然语言处理</p>
+          <p>中文分词</p>
+          <p>依存句法分析</p>
+          <p>大语言模型</p>
+          {% else %}
+          <p>natural language processing</p>
+          <p>Chinese word segmentation</p>
+          <p>Dependency Parsing</p>
+          <p>Large Language Models</p>
+          {% endif %}
+        </section>
+
+        <div class="profile-icons">
+          {% if site.semantic_scholar %}<a href="{{ site.semantic_scholar }}" aria-label="Semantic Scholar"><i class="ai ai-semantic-scholar"></i></a>{% endif %}
+          {% if site.google_scholar %}<a href="{{ site.google_scholar }}" aria-label="Google Scholar"><i class="ai ai-google-scholar"></i></a>{% endif %}
+          {% if site.cv_link %}<a href="{{ site.cv_link | relative_url }}" aria-label="CV"><i class="ai ai-cv"></i></a>{% endif %}
+          {% if site.email_link %}
+          <a href="{{ site.email_link }}" class="profile-email-button" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+            <span class="profile-email-tooltip" role="tooltip">
+              <span class="profile-email-title">Email</span>
+              <span class="profile-email-row">
+                <span class="profile-email-tag">Gmail</span>
+                <span class="profile-email-address">meiruitong365@gmail.com</span>
+              </span>
+              <span class="profile-email-row">
+                <span class="profile-email-tag">SUDA</span>
+                <span class="profile-email-address">{{ site.suda_email }}</span>
+              </span>
+            </span>
+          </a>
+          {% endif %}
+          {% if site.github_link %}<a href="{{ site.github_link }}" aria-label="GitHub"><i class="fab fa-github"></i></a>{% endif %}
+          {% if site.arxiv_link %}<a href="{{ site.arxiv_link }}" aria-label="arXiv"><i class="ai ai-arxiv"></i></a>{% endif %}
+        </div>
+
+        {% if site.location %}
+        <div class="profile-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> {{ site.location }}</div>
+        {% endif %}
+      </aside>
+
+      <main class="content">
+        {{ content }}
+
+        {% include last-updated.html %}
+      </main>
+    </div>
+
+    {% include footer.html %}
+  </body>
+</html>
